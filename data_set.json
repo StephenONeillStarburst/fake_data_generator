@@ -1,0 +1,21 @@
+{
+    "connection_details": {
+        "host": "",
+        "port": 443,
+        "user": "",
+        "password": "",
+        "catalog": "",
+        "schema": ""
+    },
+    "tables": [
+        {
+            "table": {
+                "name": "test_table",
+                "row_count": 1000,
+                "columns": [
+                    
+                ]
+            }
+        }
+    ] 
+}
