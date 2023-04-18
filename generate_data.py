@@ -1,4 +1,3 @@
-from burst_media.content import getContent
 from random import *
 
 import string

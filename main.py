@@ -19,7 +19,6 @@ if __name__ == "__main__":
         )
         
         for table in data_set['tables']:
-
             
             table_details = table['table']
             table_columns = table_details['columns']
@@ -29,9 +28,8 @@ if __name__ == "__main__":
             column_string_types = generate_data.get_column_string_types()
             column_string = generate_data.get_column_string()
 
-            #conn.create_postgres_table(connection_details['catalog'], connection_details['schema'], table_details['name'], column_string_types)
-            conn.insert_value_arr_postgres_table(connection_details['catalog'], connection_details['schema'], table_details['name'], column_string, data)
+            conn.insert_value_arr_table(connection_details['catalog'], connection_details['schema'], table_details['name'], column_string, data)
     
-    # #Create Postgres Tables
+    #Create Postgres Tables
     
 
