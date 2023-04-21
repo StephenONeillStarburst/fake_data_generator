@@ -1,5 +1,6 @@
 {
     "connection_details": {
+        "type": "",
         "host": "",
         "port": 443,
         "user": "",
