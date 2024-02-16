@@ -97,6 +97,9 @@ class GenerateData:
                 return randint(min, max)
             return randint(1, 1000000)
         
+        if column.get('column_data_populate_type') == 'default_type':
+            return 'random_value'
+        
         if column.get('column_data_populate_type') == 'first_name':
             return Faker().first_name()
         
