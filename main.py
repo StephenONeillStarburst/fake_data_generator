@@ -1,21 +1,18 @@
 from generate_data import GenerateData
 import json
 import connection
-import csv
 
 if __name__ == "__main__":
 
     with open('data_set.json') as json_file:
-        is_csv = False
         conn = None
 
         data_set = json.load(json_file)
 
         connection_details = data_set['connection_details']
+        output_details = data_set['output_details']
 
-        if connection_details['type'] == 'csv':
-            is_csv = True
-        else:
+        if connection_details['output'] == 'sql':
             conn = connection.Connection(        
                 trino_host=connection_details['host'],
                 port=connection_details['port'],
@@ -40,15 +37,12 @@ if __name__ == "__main__":
             column_string_types = generate_data.get_column_string_types()
             column_string = generate_data.get_column_string()
 
-            if is_csv:
+            if connection_details['output'] == 'local':
                 #1) Open a csv file and write the data to it
-                with open(table_details['name'] + '.csv', 'w', newline='') as csvfile:
-                    keys = data[0].keys()
-                    writer = csv.DictWriter(csvfile, keys)
-                    writer.writeheader()
-                    for row in data:
-                        writer.writerow(row)
-                csvfile.close()
+                generate_data.write_to_local_csv(data)
+            elif connection_details['output'] == 's3':
+                # Write the parquet data to s3
+                generate_data.write_parquet_to_s3_in_chunks(data, output_details['s3_bucket'], output_details['bucket_path'])
             else:
                 conn.insert_value_arr_table(connection_details['catalog'], connection_details['schema'], table_details['name'], column_string, data)
     
